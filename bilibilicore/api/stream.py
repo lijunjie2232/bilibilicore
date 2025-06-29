@@ -106,8 +106,10 @@ class DurlStream(BaseModel):
     url: str
     backup_url: str
 
+from bilibilicore.config import set_config
 
-class Stream(ApiClass):
+@set_config()
+class Stream:
     def __init__(
         self,
         v,
@@ -128,6 +130,7 @@ class Stream(ApiClass):
             parents=True,
             exist_ok=True,
         )
+        self.ffmpeg_path = Config().path.ffmpeg
 
     def clean_tmp(self, *files):
         for file in files:
