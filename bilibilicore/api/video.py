@@ -10,7 +10,7 @@ class Video:
     def get_playurl(
         self,
         id,
-        cid=False,
+        cid,
         fnval=16,
     ):
         id = str(id)
