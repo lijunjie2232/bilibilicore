@@ -199,6 +199,7 @@ class Stream:
                 a=tmp_audio_path,
                 out_file=out_path,
                 fmt=None if self.fmt != ori_fmt else None,
+                overwrite=True,
             )
             self.clean_tmp(
                 tmp_video_path,
