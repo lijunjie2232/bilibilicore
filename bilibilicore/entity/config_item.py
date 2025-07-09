@@ -1,4 +1,3 @@
-
 class ConfigItem:
     __DATA__ = None
 
