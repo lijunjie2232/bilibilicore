@@ -1,6 +1,7 @@
 from bilibilicore.utils.api_wire import api_wire
 from bilibilicore.config import set_config
 
+
 @set_config()
 @api_wire("user")
 class User:

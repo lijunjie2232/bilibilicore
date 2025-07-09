@@ -3,6 +3,7 @@ from bilibilicore.config import set_config
 from time import sleep
 import os
 
+
 @set_config()
 @api_wire("passport")
 class Passport:

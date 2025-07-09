@@ -106,7 +106,9 @@ class DurlStream(BaseModel):
     url: str
     backup_url: str
 
+
 from bilibilicore.config import set_config
+
 
 @set_config()
 class Stream:
