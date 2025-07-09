@@ -212,4 +212,4 @@ debug*.py
 test.py
 *.mp4
 
-bilibilicore/test/
+bilibilicore/tests/
