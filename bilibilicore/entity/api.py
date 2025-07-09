@@ -1,6 +1,7 @@
 import yaml
-from .config_item import ConfigItem
-from bilibilicore.utils import singleton
+
+# from .config_item import ConfigItem
+from bilibilicore.utils import singleton, ConfigItem
 from bilibilicore.api import __MODULE_PATH__
 
 
