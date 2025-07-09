@@ -4,9 +4,10 @@ from bilibilicore.utils import (
     check_and_mkdir,
     get_app_data_dir,
     singleton,
+    ConfigItem,
 )
-from bilibilicore.entity import ConfigItem
-from . import __MODULE_PATH__
+
+# from bilibilicore.entity import ConfigItem
 from functools import wraps
 from pathlib import Path
 from shutil import copy
@@ -14,6 +15,8 @@ import pickle
 import atexit  # 新增：导入 atexit 模块
 import toml
 import os
+
+__CONFIG_TEMPLATE_PATH__ = Path(__file__).parent.resolve() / "config.toml.example"
 
 
 @singleton
@@ -48,6 +51,10 @@ class Config:
     @property
     def cache_dir(self):
         return self._cache_dir
+
+    @property
+    def config_dir(self):
+        return self._config_dir
 
     def _session_init(self):
         # 检查 session 文件是否存在
@@ -85,7 +92,7 @@ class Config:
     def _init_config(self):
         if not self._config_file.is_file():
             copy(
-                __MODULE_PATH__ / "config.toml.example",
+                __CONFIG_TEMPLATE_PATH__,
                 self._config_file,
             )
         try:
@@ -128,14 +135,13 @@ _config_instance = Config()
 
 def set_config(wire_keys=["__CONFIG__", "__SESSION__"]):
     def decorator(cls):
-        @wraps(cls)
-        class ConfigWrapper(cls):
-            def __init__(self, *args, **kwargs):
-                # 动态注入配置属性
-                for key in wire_keys:
-                    setattr(self, key, getattr(_config_instance, key))
-                super().__init__(*args, **kwargs)
+        def configWrapper(*args, **kwargs):
+            obj = cls(*args, **kwargs)
+            for key in wire_keys:
+                value = getattr(_config_instance, key)
+                setattr(obj, key, value)
+            return obj
 
-        return ConfigWrapper
+        return configWrapper
 
     return decorator
