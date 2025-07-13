@@ -1,6 +1,6 @@
 # api/session.py
 
-import requests
+import niquests
 
 _shared_session = None
 UA = "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0 BiliDroid/9.3.2 (bbcallen@gmail.com)"
@@ -13,7 +13,7 @@ def get_session(
 ):
     global _shared_session
     if _shared_session is None:
-        _shared_session = requests.Session()
+        _shared_session = niquests.Session()
         # Optional: Set default headers, auth, hooks, etc.
         _shared_session.headers.update(
             {
