@@ -1,4 +1,4 @@
-from .file_util import check_and_mkdir, get_app_data_dir
+from .file_util import check_and_mkdir, get_app_data_dir, clean_tmp
 from .api_wire import api_wire
 from .singleton import singleton
 from .lazy_load import lazy_load
@@ -9,6 +9,7 @@ from .config_item import ConfigItem
 __all__ = [
     "check_and_mkdir",
     "get_app_data_dir",
+    "clean_tmp",
     "singleton",
     "api_wire",
     "lazy_load",

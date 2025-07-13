@@ -31,3 +31,9 @@ def get_app_data_dir(app_name: str, makedir=False) -> Path:
         )
 
     return app_dir
+
+
+def clean_tmp(*files):
+    for file in files:
+        if file.exists():
+            file.unlink()
