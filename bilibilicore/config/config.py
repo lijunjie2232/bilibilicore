@@ -132,6 +132,15 @@ class Config:
         #         return None  # 返回 None 表示未找到
         return getattr(ConfigItem(self.__CONFIG__), name)
 
+    def set(self, key, value):
+        keys = key.split(".")
+        parent_dict = self.__CONFIG__
+        for key in keys[:-1]:
+            if not parent_dict.get(key, None):
+                parent_dict[key] = {}
+                parent_dict = parent_dict[key]
+        parent_dict[keys[-1]] = value
+
 
 _config_instance = Config()
 
