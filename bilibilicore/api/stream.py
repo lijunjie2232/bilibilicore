@@ -132,12 +132,7 @@ class Stream:
             parents=True,
             exist_ok=True,
         )
-        self.ffmpeg_path = Config().path.ffmpeg
-
-    def clean_tmp(self, *files):
-        for file in files:
-            if file.exists():
-                file.unlink()
+        self.ffmpeg_path = Config().util.ffmpeg
 
     def get_stream(self):
         if isinstance(self.v, DashStream):
@@ -194,7 +189,7 @@ class Stream:
                     ) as f:
                         for chunk in r.iter_content(_CHUNK_SIZE):
                             f.write(chunk)
-            from bilibilicore.utils import combine
+            from bilibilicore.utils import combine, clean_tmp
 
             combine(
                 v=tmp_video_path,
@@ -203,7 +198,7 @@ class Stream:
                 fmt=None if self.fmt != ori_fmt else None,
                 overwrite=True,
             )
-            self.clean_tmp(
+            clean_tmp(
                 tmp_video_path,
                 tmp_audio_path,
             )
