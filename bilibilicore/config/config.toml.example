@@ -1,2 +1,12 @@
 [path]
-ffmpeg = "C:\\pf\\ffmpeg\\bin\\ffmpeg.exe"
+ffmpeg = "C:\\ffmpeg\\bin\\ffmpeg.exe"
+
+[download]
+default_path = "D:\\Videos"
+parallel = 2
+
+[proxy]
+enable = false
+type = "http"
+host = "127.0.0.1"
+port = "1080"
