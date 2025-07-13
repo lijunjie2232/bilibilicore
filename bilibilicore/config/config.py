@@ -57,17 +57,20 @@ class Config:
         return self._config_dir
 
     def _session_init(self):
+        self.__SESSION__ = get_session()
         # 检查 session 文件是否存在
         try:
             with open(
                 self._session_path,
                 "rb",
             ) as f:
-                self.__SESSION__ = pickle.load(f)
+                ns = pickle.load(f)
+                self.__SESSION__.headers.update(ns.headers)
+                self.__SESSION__.cookies.update(ns.cookies)
             set_session(self.__SESSION__)
         except Exception as e:
             print(f"Failed to load session from {self._session_path}: {e}")
-            self.__SESSION__ = get_session()  # 修改：将会话赋值给实例变量
+            # self.__SESSION__ = get_session()  # 修改：将会话赋值给实例变量
 
     def _save_session_on_exit(self):
         """在程序退出时保存会话到文件"""
