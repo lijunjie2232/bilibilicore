@@ -117,7 +117,7 @@ class Config:
         except Exception as e:
             print(f"Failed to save config to {self._config_file}: {e}")
 
-    def __getattr__(self, name):
+    def __getattr__(self, name, if_not_found=None):
         """
         当访问不存在的属性时，尝试从 self.__CONFIG__ 中查找对应的键值对。
         如果找到，则返回对应值；否则返回 None 或抛出 AttributeError。
@@ -130,7 +130,7 @@ class Config:
         #         data = data[i]
         #     else:
         #         return None  # 返回 None 表示未找到
-        return getattr(ConfigItem(self.__CONFIG__), name)
+        return getattr(ConfigItem(self.__CONFIG__), name, if_not_found)
 
     def set(self, key, value):
         keys = key.split(".")
