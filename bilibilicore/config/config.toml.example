@@ -4,6 +4,7 @@ ffmpeg = "C:\\ffmpeg\\bin\\ffmpeg.exe"
 [download]
 default_path = "D:\\Videos"
 parallel = 2
+auto_create_album_dir = true
 
 [proxy]
 enable = false
