@@ -136,9 +136,9 @@ class Config:
         keys = key.split(".")
         parent_dict = self.__CONFIG__
         for key in keys[:-1]:
-            if not parent_dict.get(key, None):
+            if key not in parent_dict:
                 parent_dict[key] = {}
-                parent_dict = parent_dict[key]
+            parent_dict = parent_dict[key]
         parent_dict[keys[-1]] = value
 
 
