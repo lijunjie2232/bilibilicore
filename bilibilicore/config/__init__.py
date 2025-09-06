@@ -1,6 +1,6 @@
-from .config import Config, set_config
 from pathlib import Path
 
+from .config import Config, set_config
 
 # __CONFIG__ = Config()
 

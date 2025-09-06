@@ -1,7 +1,8 @@
-from bilibilicore.utils import api_wire
-from bilibilicore.config import set_config
-from time import sleep
 import os
+from time import sleep
+
+from bilibilicore.config import set_config
+from bilibilicore.utils import api_wire
 
 
 @set_config()

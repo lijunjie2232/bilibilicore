@@ -1,6 +1,8 @@
 # from moviepy import VideoFileClip, AudioFileClip
 import subprocess
 
+import av
+
 VIDEO_CODEC_MAP = {
     ".mp4": "libx264",  # H.264 codec (default for MP4)
     ".avi": "mpeg4",  # MPEG-4 codec (common for AVI)
@@ -32,11 +34,41 @@ AUDIO_CODEC_MAP = {
 }
 
 
+def merge_audio_video(video_path, audio_path, output_path):
+    # 打开视频和音频文件
+    video_container = av.open(video_path)
+    audio_container = av.open(audio_path)
+
+    # 创建输出容器
+    output_container = av.open(output_path, mode="w")
+
+    # 复制视频流
+    video_stream = video_container.streams.video[0]
+    output_video_stream = output_container.add_stream(template=video_stream)
+
+    # 复制音频流
+    audio_stream = audio_container.streams.audio[0]
+    output_audio_stream = output_container.add_stream(template=audio_stream)
+
+    # 从视频文件中读取数据包并写入输出容器
+    for packet in video_container.demux(video_stream):
+        output_container.mux(output_video_stream.encode(packet))
+
+    # 从音频文件中读取数据包并写入输出容器
+    for packet in audio_container.demux(audio_stream):
+        output_container.mux(output_audio_stream.encode(packet))
+
+    # 关闭文件容器
+    video_container.close()
+    audio_container.close()
+    output_container.close()
+
+
 def combine(
     v,
     a,
     out_file,
-    ffmpeg_path="ffmpeg",
+    ffmpeg_path="C:\\Program Files\\ffmpeg\\bin\\ffmpeg.exe",
     fmt=None,
     overwrite=False,
 ):
@@ -61,9 +93,9 @@ def combine(
     cmd = [
         f"{ffmpeg_path}",
         "-i",
-        f"{v.absolute().__str__()}",
+        f"{v.absolute().as_posix()}",
         "-i",
-        f"{a.absolute().__str__()}",
+        f"{a.absolute().as_posix()}",
         "-c:v",
         "copy",
         "-c:a",
@@ -81,5 +113,5 @@ def combine(
             ]
         )
 
-    cmd.append(f"{out_file.absolute().__str__()}")
+    cmd.append(f"{out_file.absolute().as_posix()}")
     subprocess.run(cmd)

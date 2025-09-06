@@ -1,12 +1,11 @@
-from bilibilicore.config.config import Config
-from pathlib import Path
-
 # from time import sleep
 import os
+import threading
+from pathlib import Path
+
 from pydantic import BaseModel
 
-import threading
-
+from bilibilicore.config.config import Config
 
 _QN_240P = 6
 _QN_360P = 16
@@ -132,7 +131,7 @@ class Stream:
             parents=True,
             exist_ok=True,
         )
-        self.ffmpeg_path = Config().util.ffmpeg
+        self.ffmpeg_path = Config().ffmpeg.path
 
     def get_stream(self):
         if isinstance(self.v, DashStream):
@@ -189,7 +188,7 @@ class Stream:
                     ) as f:
                         for chunk in r.iter_content(_CHUNK_SIZE):
                             f.write(chunk)
-            from bilibilicore.utils import combine, clean_tmp
+            from bilibilicore.utils import clean_tmp, combine
 
             combine(
                 v=tmp_video_path,

@@ -1,20 +1,22 @@
-from bilibilicore.utils import (
-    get_session,
-    set_session,
-    check_and_mkdir,
-    get_app_data_dir,
-    singleton,
-    ConfigItem,
-)
+import atexit  # 新增：导入 atexit 模块
+import os
+import pickle
 
 # from bilibilicore.entity import ConfigItem
 from functools import wraps
 from pathlib import Path
 from shutil import copy
-import pickle
-import atexit  # 新增：导入 atexit 模块
+
 import toml
-import os
+
+from bilibilicore.utils import (
+    ConfigItem,
+    check_and_mkdir,
+    get_app_data_dir,
+    get_session,
+    set_session,
+    singleton,
+)
 
 __CONFIG_TEMPLATE_PATH__ = Path(__file__).parent.resolve() / "config.toml.example"
 

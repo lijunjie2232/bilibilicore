@@ -1,6 +1,7 @@
-from bilibilicore.utils.api_wire import api_wire
-from bilibilicore.config import set_config
 import os
+
+from bilibilicore.config import set_config
+from bilibilicore.utils.api_wire import api_wire
 
 
 @set_config()
